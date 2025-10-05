@@ -147,3 +147,49 @@ TEST(test_resolver, resolve_v6) {
     }
   }
 }
+
+TEST(test_resolver, resolve_alter_versions_v6) {
+  apiset::ResolverV6 resolver{};
+
+  {
+    constexpr char ALIAS_PATCH_DECREASED_A[] = "api-ms-win-rtcore-ntuser-private-l1-1-10";
+    constexpr wchar_t ALIAS_PATCH_DECREASED_W[] = L"api-ms-win-rtcore-ntuser-private-l1-1-10";
+    auto resolve_alias_p_d_c = resolver.resolve(ALIAS_PATCH_DECREASED_A);
+    auto resolve_alias_p_d_s = resolver.resolve(std::string{ALIAS_PATCH_DECREASED_A});
+    auto resolve_alias_p_d_wc = resolver.resolve(ALIAS_PATCH_DECREASED_W);
+    auto resolve_alias_p_d_ws = resolver.resolve(std::wstring{ALIAS_PATCH_DECREASED_W});
+    EXPECT_TRUE(resolve_alias_p_d_c);
+    if (resolve_alias_p_d_c) {
+      EXPECT_EQ(resolve_alias_p_d_c->size(), 1);
+      EXPECT_TRUE(resolve_alias_p_d_c->contains("user32.dll"));
+    }
+    EXPECT_TRUE(resolve_alias_p_d_s);
+    if (resolve_alias_p_d_s) {
+      EXPECT_EQ(resolve_alias_p_d_s->size(), 1);
+      EXPECT_TRUE(resolve_alias_p_d_s->contains("user32.dll"));
+    }
+    EXPECT_TRUE(resolve_alias_p_d_wc);
+    if (resolve_alias_p_d_wc) {
+      EXPECT_EQ(resolve_alias_p_d_wc->size(), 1);
+      EXPECT_TRUE(resolve_alias_p_d_wc->contains(L"user32.dll"));
+    }
+    EXPECT_TRUE(resolve_alias_p_d_ws);
+    if (resolve_alias_p_d_ws) {
+      EXPECT_EQ(resolve_alias_p_d_ws->size(), 1);
+      EXPECT_TRUE(resolve_alias_p_d_ws->contains(L"user32.dll"));
+    }
+  }
+
+  {
+    constexpr char ALIAS_PATCH_INCREASED_A[] = "api-ms-win-rtcore-ntuser-private-l1-1-12";
+    constexpr wchar_t ALIAS_PATCH_INCREASED_W[] = L"api-ms-win-rtcore-ntuser-private-l1-1-12";
+    auto resolve_alias_p_i_c = resolver.resolve(ALIAS_PATCH_INCREASED_A);
+    auto resolve_alias_p_i_s = resolver.resolve(std::string{ALIAS_PATCH_INCREASED_A});
+    auto resolve_alias_p_i_wc = resolver.resolve(ALIAS_PATCH_INCREASED_W);
+    auto resolve_alias_p_i_ws = resolver.resolve(std::wstring{ALIAS_PATCH_INCREASED_W});
+    EXPECT_EQ(resolve_alias_p_i_c, std::nullopt);
+    EXPECT_EQ(resolve_alias_p_i_s, std::nullopt);
+    EXPECT_EQ(resolve_alias_p_i_wc, std::nullopt);
+    EXPECT_EQ(resolve_alias_p_i_ws, std::nullopt);
+  }
+}

@@ -47,7 +47,7 @@ if(MSVC)
   target_compile_options(
     sapisresolver
     PUBLIC
-    /constexpr:steps2000000
+    /constexpr:steps8000000
     /W4 /arch:AVX /fp:fast /GS /GT /MP /nologo /Oi /Qpar /utf-8
     $<$<CONFIG:Debug>:/JMC /LDd /Ob0 /Od /RTC1>
     $<$<CONFIG:Release>:/GA /GL /Gy /guard:cf- /LD /Os>
@@ -64,7 +64,7 @@ else(MSVC)
   target_compile_options(
     sapisresolver
     PUBLIC
-    -fconstexpr-steps=3000000
+    -fconstexpr-steps=10000000
     -Wall -Wextra -mavx -mfpmath=sse
     -finput-charset=UTF-8 -fexec-charset=UTF-8 -municode
     $<$<CONFIG:Debug>:-Og -g>
@@ -101,14 +101,14 @@ if(MSVC)
   target_compile_options(
     sapisresolver_header_only
     INTERFACE
-    /constexpr:steps2000000
+    /constexpr:steps8000000
     /utf-8
   )
 else(MSVC)
   target_compile_options(
     sapisresolver_header_only
     INTERFACE
-    -fconstexpr-steps=3000000
+    -fconstexpr-steps=10000000
   )
 endif(MSVC)
 
