@@ -18,7 +18,7 @@ include(FetchContent)
 FetchContent_Declare(
   sapisresolver
   GIT_REPOSITORY https://github.com/Yamanekazuma/SAPIS-Resolver.git
-  GIT_TAG v1.0.0
+  GIT_TAG v1.1.0
 )
 FetchContent_MakeAvailable(sapisresolver)
 
