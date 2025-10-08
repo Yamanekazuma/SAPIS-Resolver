@@ -13,7 +13,7 @@ project(sapisresolver VERSION ${SAPISRESOLVER_VERSION_MAJOR}.${SAPISRESOLVER_VER
 
 # ==== Config ====
 
-option(SAPISRESOLVER_BUILD_ALL "Build all artifacts" ON)
+option(SAPISRESOLVER_BUILD_ALL "Build all artifacts" OFF)
 
 option(SAPISRESOLVER_BUILD_EXAMPLE "Build example" OFF)
 option(SAPISRESOLVER_BUILD_EXAMPLE_HO "Build example using header only version" OFF)
@@ -68,7 +68,7 @@ else(MSVC)
     -Wall -Wextra -mavx -mfpmath=sse
     -finput-charset=UTF-8 -fexec-charset=UTF-8 -municode
     $<$<CONFIG:Debug>:-Og -g>
-    $<$<CONFIG:Release>:-O0 -ftree-vectorize -fomit-frame-pointer>
+    $<$<CONFIG:Release>:-O2 -ftree-vectorize -fomit-frame-pointer>
   )
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     # for x64
